@@ -71,7 +71,7 @@ const adapter = process.env.CF_WORKERS
 export default defineConfig({
 	site: siteConfig.site_url,
 
-	base: "/astro-course-hub/",
+	base: "/",
 	trailingSlash: "always",
 	server: {
 		port: 4321,

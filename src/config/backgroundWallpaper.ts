@@ -107,13 +107,13 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				{
 					name: "GitHub",
 					icon: "fa7-brands:github",
-					url: "https://github.com/Sonder9999/astro-course-hub",
+					url: "https://github.com/Henu-Kaguya/henu-kaguya.github.io",
 					showName: true,
 				},
 				{
 					name: "Email",
 					icon: "fa7-solid:envelope",
-					url: "mailto:example@email.com",
+					url: "mailto:2734165908@qq.com",
 				},
 				/* 				{
 					name: "Sponsor",

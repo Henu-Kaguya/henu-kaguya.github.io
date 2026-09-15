@@ -54,13 +54,13 @@ export const commentConfig: CommentConfig = {
 	//giscus评论系统配置
 	giscus: {
 		// 设置 Giscus 评论系统仓库 (例如: "your-username/your-repo")
-		repo: "chlchi/astra_course_comment_sample",
+		repo: "Henu-Kaguya/astra_course_comment_henu",
 		// 设置 Giscus 评论系统仓库ID
-		repoId: "R_kgDOUXilIw",
+		repoId: "R_kgDOUXipyw",
 		// 设置 Giscus 评论系统分类
 		category: "General",
 		// 获取 Giscus 评论系统分类ID
-		categoryId: "DIC_kwDOUXilI84DFa3A",
+		categoryId: "DIC_kwDOUXipy84DFa3Y",
 		// 获取 Giscus 评论系统映射方式
 		mapping: "pathname",
 		// 获取 Giscus 评论系统严格模式

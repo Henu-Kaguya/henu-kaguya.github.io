@@ -151,9 +151,9 @@ export const mapConfig: MapConfig = {
 	// 备用投稿渠道：邮箱 / QQ等
 	spotContact: {
 		enable: true,
-		email: "admin@henu.edu.cn",
-		qq: "12345678",
+		email: "2734165908@qq.com",
+		qq: "2734165908",
 		noticeText:
-			"没有 GitHub 账号？欢迎通过邮件或 QQ 将点位评价与修正意见发送给管理员代为收录。",
+			"没有 GitHub 账号？欢迎通过邮件或 QQ 将点位评价与修正意见发送给我。",
 	},
 };

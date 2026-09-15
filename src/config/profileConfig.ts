@@ -30,7 +30,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/Sonder9999",
+			url: "https://github.com/Henu-Kaguya",
 			showName: false,
 		},
 		{

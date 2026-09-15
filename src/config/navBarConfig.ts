@@ -41,7 +41,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			LinkPresets.About,
 			{
 				name: "GitHub",
-				url: "https://github.com/Sonder9999/astro-course-hub",
+				url: "https://github.com/Henu-Kaguya/henu-kaguya.github.io",
 				external: true,
 				icon: "fa7-brands:github",
 			},

@@ -34,24 +34,26 @@ const pages = resolvePageToggles({
 
 export const siteConfig: SiteConfig = {
 	// 站点标题（通用高校课程资源站，可按需在各自 Fork 中修改）
-	title: "高校课程资源导航",
+	title: "河南大学计算机课程资源导航",
 
 	// 站点副标题
-	subtitle: "开源课程资料、学习指南与试卷复习导航站",
+	subtitle: "开源课程资料、学习指南与试卷复习导航站 (HENU-CS)",
 
 	// 站点 URL
-	site_url: "https://sonder9999.github.io/astro-course-hub/",
+	site_url: "https://henu-kaguya.github.io/",
 
 	// 站点描述
 	description:
-		"一个通用的开源高校课程资源导航与阅读站，提供各学期培养方案、专业核心课程攻略、实验指南、复习历年卷及优质学习资源导航。",
+		"河南大学计算机科学与技术专业开源课程资源导航与阅读站，提供各学期培养方案、专业核心课程攻略、实验指南、复习历年卷及优质学习资源导航。",
 
 	// 站点关键词
 	keywords: [
+		"河南大学",
+		"HENU",
+		"计算机科学与技术",
 		"高校课程",
 		"课程攻略",
 		"课程指南",
-		"计算机科学",
 		"开源课程资料",
 		"历年试卷",
 		"Astro",
