@@ -288,6 +288,18 @@ onMount(() => {
 		const discussion = event.data?.giscus?.discussion;
 		if (discussion) {
 			const count = discussion.totalCommentCount ?? 0;
+			// 同步派发最新真实评论条数给地图
+			if (typeof window !== "undefined" && activeSpot) {
+				window.dispatchEvent(
+					new CustomEvent("update-spot-reviews", {
+						detail: {
+							spotId: activeSpot.id,
+							totalCount: count,
+							reviews: displayReviews,
+						},
+					}),
+				);
+			}
 			// 仅当讨论总条数确实有新增变动（如用户新提交了评论）时才重新拉取，避免初次挂载重复触发
 			if (lastDiscussionCount === null) {
 				lastDiscussionCount = count;

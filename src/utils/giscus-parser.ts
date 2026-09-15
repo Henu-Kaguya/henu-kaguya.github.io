@@ -45,6 +45,13 @@ export async function fetchGiscusDiscussionData(
 	const { repo, term, category, strict = "1" } = options;
 	if (!repo || !term) return { comments: [], totalCommentCount: 0 };
 
+	// 浏览器端因 Giscus 官方服务端 CORS 限制（仅允许 giscus.app 自身域来源），
+	// 在客户端直接 fetch 会触发浏览器 CORS 拦截红字。
+	// 客户端环境讨论条数与状态通过 Giscus iframe 的 postMessage 机制原生获取。
+	if (typeof window !== "undefined") {
+		return { comments: [], totalCommentCount: 0 };
+	}
+
 	const strictParam =
 		strict === true || strict === "1" || strict === "true" ? "1" : "0";
 	const url = `https://giscus.app/api/discussions?repo=${encodeURIComponent(

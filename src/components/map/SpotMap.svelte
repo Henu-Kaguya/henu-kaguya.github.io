@@ -10,6 +10,8 @@ import {
 	buildInfoWindowHtml,
 	createClusterMarkerElement,
 	createMarkerElement,
+	renderCommentHtml,
+	renderRatingHtml,
 } from "@/utils/map-marker-utils";
 import { calculateSingleSpotStats } from "@/utils/spot-aggregate-utils";
 
