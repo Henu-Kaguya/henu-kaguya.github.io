@@ -320,7 +320,7 @@ onDestroy(() => {
               }}
 
               {#if accordionMode === 'independent'}
-                <!-- ================= 风格 1：独立卡片手风琴 (手风琴_独立.html) ================= -->
+                <!-- ================= 风格 1：独立手风琴 (手风琴_独立.html) ================= -->
                 <div
                   class="accordion-card independent-box {isTouchExpanded ? 'touch-expanded' : ''}"
                   role="button"
@@ -368,7 +368,7 @@ onDestroy(() => {
                   </div>
                 </div>
               {:else}
-                <!-- ================= 风格 2：连续无缝手风琴 (手风琴_连续.html) ================= -->
+                <!-- ================= 风格 2：连续手风琴 (手风琴_连续.html) ================= -->
                 <div
                   class="accordion-card continuous-item {isTouchExpanded ? 'touch-expanded' : ''}"
                   role="button"

@@ -98,13 +98,13 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "guestbook",
 	},
 	Booknav: {
-		name: "资源导航",
+		name: "书签",
 		url: "/booknav/",
 		icon: "material-symbols:bookmarks-outline",
 		pageKey: "booknav",
 	},
 	Map: {
-		name: "校园地图",
+		name: "地图",
 		url: "/map/",
 		icon: "material-symbols:map",
 		pageKey: "map",

@@ -98,7 +98,7 @@
   position: relative;
 }
 
-/* ================= 模式 1：独立卡片版 ================= */
+/* ================= 模式 1：独立版 ================= */
 .accordion-body.independent {
   gap: 12px;
   background: transparent;
@@ -185,7 +185,7 @@
   font-size: 17px;
 }
 
-/* ================= 模式 2：连续无缝版 ================= */
+/* ================= 模式 2：连续版 ================= */
 .accordion-body.continuous {
   width: 100%;
   height: 100%;

@@ -624,13 +624,13 @@ onMount(() => {
 						class="px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer {accordionMode === 'continuous' ? 'bg-white dark:bg-neutral-800 text-(--primary) shadow-xs' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white'}"
 						onclick={() => (accordionMode = "continuous")}
 					>
-						连续无缝
+						连续
 					</button>
 					<button
 						class="px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer {accordionMode === 'independent' ? 'bg-white dark:bg-neutral-800 text-(--primary) shadow-xs' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white'}"
 						onclick={() => (accordionMode = "independent")}
 					>
-						独立卡片
+						独立
 					</button>
 				</div>
 			</div>
