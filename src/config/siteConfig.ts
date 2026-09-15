@@ -40,7 +40,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "开源课程资料、学习指南与试卷复习导航站 (HENU-CS)",
 
 	// 站点 URL
-	site_url: "https://henu-kaguya.github.io/",
+	site_url: "https://henu.hodaru.com/",
 
 	// 站点描述
 	description:
