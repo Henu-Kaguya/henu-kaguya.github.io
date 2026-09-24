@@ -21,7 +21,7 @@ export type CourseData = {
 	repoUrl?: string; // GitHub 课程仓库链接
 	externalLinks?: CourseExternalLink[]; // 外部链接 (选课网/MOOC/精品课/云盘等)
 	icon?: string; // 课程图标
-	image?: string; // 封面图 (可选)
+	image?: string | string[]; // 封面图 (可选, 支持单图或候选图池数组)
 	order?: number; // 排序权重
 	draft?: boolean;
 	published?: Date;
@@ -64,7 +64,7 @@ export interface HierarchyNode {
 	color?: string; // 主题色
 	badge?: string; // 角标徽章，如 "语言认证", "核心学院"
 	icon?: string;
-	image?: string;
+	image?: string | string[];
 	order?: number;
 }
 
@@ -123,7 +123,7 @@ export interface SubjectMeta {
 	majors?: string[]; // 关联的专业 ID 列表，例如 ["cs", "se"]
 	icon?: string; // 徽标或图标标识 (可选)
 	gradient: string; // 渐变背景兜底
-	image: string; // 视觉卡片配图
+	image?: string | string[]; // 视觉卡片配图 (支持单图或候选图池数组)
 	description: string; // 课程简介
 	semester?: string; // 对应开课学期
 	semestersByMajor?: Record<string, string>; // 针对不同专业可能不同的学期归属

@@ -25,7 +25,7 @@ export type CourseListItem = {
 	repoUrl: string;
 	externalLinks: { name: string; url: string; icon?: string }[];
 	icon: string;
-	image: string;
+	image?: string | string[];
 	order: number;
 	updated?: string;
 };
@@ -96,7 +96,7 @@ export async function getCourseListData(): Promise<CourseListItem[]> {
 			repoUrl: c.data.repoUrl || "",
 			externalLinks: c.data.externalLinks || [],
 			icon: c.data.icon || "material-symbols:book-2-outline",
-			image: c.data.image || getSubjectMeta(slug).image,
+			image: c.data.image || getSubjectMeta(slug).image || "",
 			order: c.data.order ?? 100,
 			updated: c.data.updated
 				? c.data.updated.toISOString().split("T")[0]

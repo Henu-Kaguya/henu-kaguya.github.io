@@ -61,6 +61,56 @@ export function getCourseCover(
 }
 
 /**
+ * 客户端运行时已选封面缓存（生命周期为单次页面会话）
+ * 作用：当课程配置了图池数组时，在单次页面访问中固定随机抽取的结果，
+ * 避免用户在页面内进行搜索、分类过滤、排序、3D旋转漫游等交互时卡片封面频繁闪烁。
+ * 当用户刷新页面（F5）或重新进入时，缓存自动重置并重新随机抽取。
+ */
+const sessionCoverCache = new Map<string, string>();
+
+/**
+ * 从课程封面配置（支持单图 URL 或候选图池数组 string[]）中智能解析出最终渲染的图片 URL
+ * - 若配置了图池数组 (string[])：从候选列表中随机抽取一张（并在当前会话中保持稳定）
+ * - 若配置了单张固定图片 (string)：直接采用该图片
+ * - 兜底或未指定：回退到 getCourseCover 动态二次元壁纸 API
+ *
+ * @param image 课程配置的 image 字段 (单图 URL 或候选图池数组)
+ * @param courseId 课程标识/目录名 (用于兜底或缓存标识)
+ * @param refreshSeed 可选的客户端刷新戳
+ */
+export function resolveCover(
+	image?: string | string[],
+	courseId?: string,
+	refreshSeed?: string | number,
+): string {
+	const cacheKey = courseId || (typeof image === "string" ? image : "");
+	if (cacheKey && sessionCoverCache.has(cacheKey)) {
+		return sessionCoverCache.get(cacheKey)!;
+	}
+
+	let result = "";
+	if (Array.isArray(image)) {
+		if (image.length > 0) {
+			const index = Math.floor(Math.random() * image.length);
+			result = image[index];
+		} else if (courseId) {
+			result = getCourseCover(courseId, refreshSeed);
+		}
+	} else if (image && !image.includes("t.alcy.cc")) {
+		result = image;
+	} else if (courseId) {
+		result = getCourseCover(courseId, refreshSeed);
+	} else {
+		result = image || "";
+	}
+
+	if (cacheKey && result) {
+		sessionCoverCache.set(cacheKey, result);
+	}
+	return result;
+}
+
+/**
  * 学期轮盘大组配置模板 (Semester Groups Template)
  *
  * 您可在此自定义学期划分（如大一上至大三下），设置各学期主题色以及包含的课程标识 (subjectIds)。
@@ -159,6 +209,12 @@ export const semesterGroups: SemesterGroup[] = [
  *
  * 您可在此为各个课程配置展示名称、分类标签、图标、背景渐变、卡片封面图与简短介绍。
  * 键名（Key）应与 semesterGroups 中的 subjectIds 或课程文件夹名对应。
+ *
+ * 【image 封面图配置支持三种模式】：
+ * 1. 默认随机 API：image: getCourseCover("课程ID")
+ * 2. 单张固定封面：直接填写字符串，如 image: "/images/courses/math.jpg" 或远程直链 "https://..."
+ * 3. 专属图池随机：填写链接数组 string[]，如 image: ["/img1.jpg", "/img2.jpg", "https://..."]，
+ *    系统在每次刷新页面时会自动从该候选池中随机抽取一张（单次会话内保持稳定，防止切换时闪烁）。
  */
 export const subjectMetas: Record<string, SubjectMeta> = {
 	// --- 专业总览 (Overview) ---
@@ -577,9 +633,13 @@ export function getSubjectMeta(dirName: string): SubjectMeta {
 	const semester = group ? group.name.split("·")[0].trim() : undefined;
 
 	if (subjectMetas[dirName]) {
+		const configuredImage = subjectMetas[dirName].image;
+		const hasImage = Array.isArray(configuredImage)
+			? configuredImage.length > 0
+			: Boolean(configuredImage);
 		return {
 			...subjectMetas[dirName],
-			image: subjectMetas[dirName].image || getCourseCover(dirName),
+			image: hasImage ? configuredImage : getCourseCover(dirName),
 			semester: subjectMetas[dirName].semester || semester,
 			majors: subjectMetas[dirName].majors || ["cs"],
 		};

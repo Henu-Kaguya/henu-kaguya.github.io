@@ -1,5 +1,5 @@
 <script lang="ts">
-import { getSubjectMeta } from "@/config/subjectConfig";
+import { getSubjectMeta, resolveCover } from "@/config/subjectConfig";
 import type { TreeNode } from "@/types/course";
 
 let {
@@ -39,7 +39,7 @@ function countMdFiles(node: TreeNode): number {
       >
         <div class="img-wrapper" style="background: {meta.gradient};">
           <img
-            src={meta.image}
+            src={resolveCover(meta.image, subject.name)}
             alt={meta.name}
             loading="lazy"
             onerror={(e) => {

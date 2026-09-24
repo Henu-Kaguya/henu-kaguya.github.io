@@ -15,6 +15,7 @@ import {
 	getSemesterGroupsByMajor,
 	getSubjectMeta,
 	majorSemesterGroups,
+	resolveCover,
 	semesterGroups,
 } from "@/config/subjectConfig";
 import type {
@@ -32,17 +33,14 @@ import SubjectArchivePanel from "./SubjectArchivePanel.svelte";
 const refreshSeed = typeof window !== "undefined" ? Date.now() : "";
 
 function resolveCourseCover(course: CourseListItem): string {
-	if (course.image && !course.image.includes("t.alcy.cc")) {
-		return course.image;
-	}
-	return getCourseCover(course.id, refreshSeed);
+	return resolveCover(course.image, course.id, refreshSeed);
 }
 
-function resolveNodeCover(nodeId: string, customImage?: string): string {
-	if (customImage && !customImage.includes("t.alcy.cc")) {
-		return customImage;
-	}
-	return getCourseCover(nodeId, refreshSeed);
+function resolveNodeCover(
+	nodeId: string,
+	customImage?: string | string[],
+): string {
+	return resolveCover(customImage, nodeId, refreshSeed);
 }
 
 interface Diagnostics {
@@ -447,7 +445,7 @@ const collegeCarouselCards = $derived.by<CarouselCardItem[]>(() => {
 				enName: col.shortName || "",
 				subTitle: col.description,
 				themeColor: col.color || "#3b82f6",
-				image: col.image || getCourseCover(col.id, refreshSeed),
+				image: resolveNodeCover(col.id, col.image),
 				badge: col.badge || "",
 				actionLabel: col.id === "toefl" ? "开始备考 →" : "进入学院 →",
 			};
@@ -474,7 +472,7 @@ const majorCarouselCards = $derived.by<CarouselCardItem[]>(() => {
 				enName: m.shortName || "",
 				subTitle: m.description,
 				themeColor: m.color || "#3b82f6",
-				image: m.image || getCourseCover(m.id, refreshSeed),
+				image: resolveNodeCover(m.id, m.image),
 				badge: m.badge || "",
 				actionLabel: "进入专业课程 →",
 			};

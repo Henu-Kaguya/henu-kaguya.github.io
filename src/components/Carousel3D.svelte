@@ -4,17 +4,18 @@ import {
 	courseCoverConfig,
 	getCourseCover,
 	getSubjectMeta,
+	resolveCover,
 	semesterGroups,
 } from "@/config/subjectConfig";
 import type { CarouselCardItem, SemesterGroup, TreeNode } from "@/types/course";
 
 const refreshSeed = typeof window !== "undefined" ? Date.now() : "";
 
-function resolveSubjectCover(subId: string, defaultImage?: string): string {
-	if (defaultImage && !defaultImage.includes("t.alcy.cc")) {
-		return defaultImage;
-	}
-	return getCourseCover(subId, refreshSeed);
+function resolveSubjectCover(
+	subId: string,
+	defaultImage?: string | string[],
+): string {
+	return resolveCover(defaultImage, subId, refreshSeed);
 }
 
 interface Props {
@@ -571,7 +572,7 @@ onDestroy(() => {
               >
                 <div class="continuous-bg" style="background: {card.themeColor};">
                   <img
-                    src={card.image || getCourseCover(card.id, refreshSeed)}
+                    src={resolveCover(card.image, card.id, refreshSeed)}
                     alt={card.name}
                     loading="eager"
                     decoding="async"

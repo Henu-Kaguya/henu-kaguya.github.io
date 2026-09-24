@@ -58,7 +58,7 @@ type CourseData = {
 	repoUrl: string;
 	externalLinks: ExternalLink[];
 	icon: string;
-	image: string;
+	image: string | string[];
 	order?: number;
 	draft: boolean;
 	published?: Date;
@@ -106,7 +106,7 @@ const coursesCollection: ContentCollection<CourseData> = defineCollection({
 			.optional()
 			.default([]),
 		icon: z.string().optional().default("material-symbols:book-2-outline"),
-		image: z.string().optional().default(""),
+		image: z.union([z.string(), z.array(z.string())]).optional().default(""),
 		order: z.number().optional().default(100),
 		draft: z.boolean().optional().default(false),
 		published: z.date().optional(),
