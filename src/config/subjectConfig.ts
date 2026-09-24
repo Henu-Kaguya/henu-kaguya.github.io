@@ -216,6 +216,11 @@ export const semesterGroups: SemesterGroup[] = [
  * 3. 专属图池随机：填写链接数组 string[]，如 image: ["/img1.jpg", "/img2.jpg", "https://..."]，
  *    系统在每次刷新页面时会自动从该候选池中随机抽取一张（单次会话内保持稳定，防止切换时闪烁）。
  */
+/**
+ * Cloudflare R2 生产 CDN 专属项目资产前缀
+ */
+const CF_ASSET_BASE = "https://assets.hodaru.com/henu-kaguya";
+
 export const subjectMetas: Record<string, SubjectMeta> = {
 	// --- 专业总览 (Overview) ---
 	"Henu-Kaguya": {
@@ -223,7 +228,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "专业总览",
 		category: "专业总览",
 		gradient: "linear-gradient(135deg, #4f46e5, #6366f1, #818cf8)",
-		image: getCourseCover("Henu-Kaguya"),
+		image: `${CF_ASSET_BASE}/tenten_anisphia_euphyllia_flower_field.jpg`,
 		description: "河南大学计算机科学与技术专业课程资料及学习指南合集 (HENU-CS)",
 		remoteRepo: "https://github.com/Henu-Kaguya/Henu-Kaguya.git",
 		remoteBranch: "main",
@@ -236,7 +241,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "计算机科学导论",
 		category: "学科基础课",
 		gradient: "linear-gradient(135deg, #0284c7, #38bdf8, #0ea5e9)",
-		image: getCourseCover("Introduction-to-Computer-Science"),
+		image: `${CF_ASSET_BASE}/akashic_sistine_fibel_graduation.jpg`,
 		description: "计算机学科通识导引与计算基础认知",
 		remoteRepo:
 			"https://github.com/Henu-Kaguya/Introduction-to-Computer-Science.git",
@@ -248,7 +253,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "C语言程序设计",
 		category: "学科基础课",
 		gradient: "linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa)",
-		image: getCourseCover("C-Primer-Plus-Programming"),
+		image: `${CF_ASSET_BASE}/vtuber_logo_cpp.png`,
 		description: "C Primer Plus 程序设计课后作业、实验与代码实践",
 		remoteRepo: "https://github.com/Henu-Kaguya/C-Primer-Plus-Programming.git",
 		remoteBranch: "main",
@@ -259,7 +264,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "计算思维与创新",
 		category: "学科基础课",
 		gradient: "linear-gradient(135deg, #0d9488, #14b8a6, #2dd4bf)",
-		image: getCourseCover("Computational-Thinking-and-Innovation"),
+		image: `${CF_ASSET_BASE}/bocchi_the_rock_bocchi_kita_sakura_walk.jpg`,
 		description: "计算思维方法论、创新实践与习题资料",
 		remoteRepo:
 			"https://github.com/Henu-Kaguya/Computational-Thinking-and-Innovation.git",
@@ -298,7 +303,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "逻辑设计",
 		category: "学科基础课",
 		gradient: "linear-gradient(135deg, #ea580c, #f97316, #fb923c)",
-		image: getCourseCover("Logic-Design"),
+		image: `${CF_ASSET_BASE}/genshin_sandrone_clockwork_gears_reflection.jpg`,
 		description: "布尔代数、卡诺图化简、组合逻辑与时序逻辑设计原理",
 		remoteRepo: "https://github.com/Henu-Kaguya/Logic-Design.git",
 		remoteBranch: "main",
@@ -320,7 +325,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "C#程序设计",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #6d28d9, #8b5cf6, #a78bfa)",
-		image: getCourseCover("CSharp-Programing"),
+		image: `${CF_ASSET_BASE}/vtuber_logo_csharp.png`,
 		description: ".NET 体系、C# 语法特性、面向对象编程与课程项目",
 		remoteRepo: "https://github.com/Henu-Kaguya/CSharp-Programing.git",
 		remoteBranch: "main",
@@ -382,7 +387,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "C#网络应用编程",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #4338ca, #6366f1, #a5b4fc)",
-		image: getCourseCover("CSharp-Network-Application-Programming"),
+		image: `${CF_ASSET_BASE}/vtuber_logo_csharp.png`,
 		description: "Socket 通信、多线程网络编程、WinForms/WPF 与网络服务应用",
 		remoteRepo:
 			"https://github.com/Henu-Kaguya/CSharp-Network-Application-Programming.git",
@@ -394,7 +399,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "数字图像处理",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #c026d3, #e879f9, #f0abfc)",
-		image: getCourseCover("Digital-Image-Processing"),
+		image: `${CF_ASSET_BASE}/frieren_world_tree_sunset.jpg`,
 		description: "图像空域/频域增强、形态学处理、边缘检测与分割算法",
 		remoteRepo: "https://github.com/Henu-Kaguya/Digital-Image-Processing.git",
 		remoteBranch: "main",
@@ -420,7 +425,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "软件工程",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #059669, #34d399, #6ee7b7)",
-		image: getCourseCover("Software-Engineering"),
+		image: `${CF_ASSET_BASE}/anime_attic_workshop_storage_loft.jpg`,
 		description: "敏捷开发、需求工程、UML 建模、软件架构设计与测试流程",
 		remoteRepo: "https://github.com/Henu-Kaguya/Software-Engineering.git",
 		remoteBranch: "main",
@@ -442,7 +447,16 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "操作系统",
 		category: "专业核心课",
 		gradient: "linear-gradient(135deg, #374151, #4b5563, #6b7280)",
-		image: getCourseCover("Operating-System"),
+		image: [
+			`${CF_ASSET_BASE}/win11_tan_dragged_by_cursor.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_eating_pocky.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_eating_pocky_bright.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_holding_windows11_box.png`,
+			`${CF_ASSET_BASE}/win11_tan_lying_bsod_crash_screen.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_peeking_bloom_wallpaper.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_reaching_hand_floating_icons.jpg`,
+			`${CF_ASSET_BASE}/win11_tan_standing_portrait_earphones.png`,
+		],
 		description: "进程与线程同步、死锁处理、虚拟内存管理与文件系统设计",
 		remoteRepo: "https://github.com/Henu-Kaguya/Operating-System.git",
 		remoteBranch: "main",
@@ -453,7 +467,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "机器学习与数据挖掘",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #7e22ce, #a855f7, #c084fc)",
-		image: getCourseCover("Machine-Learning"),
+		image: `${CF_ASSET_BASE}/atri_submerged_school_seashore.jpg`,
 		description: "监督学习、无监督聚类、深度神经网络算法与数据挖掘实验",
 		remoteRepo: "https://github.com/Henu-Kaguya/Machine-Learning.git",
 		remoteBranch: "main",
@@ -513,7 +527,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "计算机图形学",
 		category: "专业选修课",
 		gradient: "linear-gradient(135deg, #0369a1, #0284c7, #38bdf8)",
-		image: getCourseCover("Computer-Graphics"),
+		image: `${CF_ASSET_BASE}/bocchi_the_rock_kessoku_band_chibi_four_panel.png`,
 		description: "图形渲染管线、变换矩阵、光照模型与 OpenGL 着色器实验",
 		remoteRepo: "https://github.com/Henu-Kaguya/Computer-Graphics.git",
 		remoteBranch: "main",
@@ -524,7 +538,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		name: "专业实践与小学期实训",
 		category: "实践与实验",
 		gradient: "linear-gradient(135deg, #047857, #10b981, #34d399)",
-		image: getCourseCover("CS-Small-Term"),
+		image: `${CF_ASSET_BASE}/yuru_camp_lake_motosu_mt_fuji.jpg`,
 		description:
 			"计算机专业小学期全栈开发实训：网络爬虫、目标检测、RAG与AIGC工程",
 		remoteRepo: "https://github.com/Henu-Kaguya/CS-Small-Term.git",
@@ -552,7 +566,7 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		majors: ["toefl"],
 		semester: "专项备考",
 		gradient: "linear-gradient(135deg, #0284c7, #06b6d4, #38bdf8)",
-		image: getCourseCover("TOEFL"),
+		image: `${CF_ASSET_BASE}/anime_school_dining_hall_night.jpg`,
 		description:
 			"托福备战方法论、分类题型精析、长难句拆解、分类词汇与真题模考体系",
 		remoteRepo: "https://github.com/Sonder9999/TOEFL.git",
