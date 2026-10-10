@@ -94,5 +94,9 @@ export function url(path: string): string {
 	}
 
 	// 只有本地相对路径才添加BASE_URL
-	return joinUrl("", import.meta.env.BASE_URL, path);
+	const baseUrl =
+		typeof import.meta !== "undefined" && import.meta.env
+			? import.meta.env.BASE_URL
+			: "/";
+	return joinUrl("", baseUrl, path);
 }

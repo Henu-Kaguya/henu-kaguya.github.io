@@ -57,12 +57,6 @@ export const courseConfig: CourseSiteConfig = {
 				"bg-teal-500/15 text-teal-700 dark:text-teal-300 border-teal-500/30",
 		},
 		{
-			id: "y1_both",
-			name: "大一上 · 大一下",
-			color:
-				"bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
-		},
-		{
 			id: "y2s1",
 			name: "大二上",
 			color: "bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-500/30",
@@ -90,6 +84,12 @@ export const courseConfig: CourseSiteConfig = {
 			name: "大四",
 			color:
 				"bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
+		},
+		{
+			id: "public",
+			name: "公共基础",
+			color:
+				"bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-500/30",
 		},
 		{
 			id: "general",
@@ -140,6 +140,7 @@ export const courseConfig: CourseSiteConfig = {
 	categories: [
 		{ name: "全部方向" },
 		{ name: "专业总览", description: "培养方案、路线图与学习指南" },
+		{ name: "公共基础课", description: "全校思想政治、外语、体育等通识必修" },
 		{ name: "学科基础课", description: "数学、物理与跨专业大类基础" },
 		{ name: "专业核心课", description: "本专业骨干必修主干课程" },
 		{ name: "专业选修课", description: "细分领域进阶选修方向" },

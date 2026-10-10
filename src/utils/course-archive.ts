@@ -39,7 +39,7 @@ export function getCourseArchiveListData(): CourseListItem[] {
 			semester: semName,
 			category: meta.category || "专业核心课",
 			major: resolvedMajors,
-			tags: [meta.category, semName].filter(Boolean),
+			tags: Array.from(new Set([meta.category, semName].filter(Boolean))),
 			description: meta.description || "课程资料与知识图谱",
 			credits: 3.5,
 			hours: 48,

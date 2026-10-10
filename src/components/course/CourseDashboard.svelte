@@ -73,7 +73,7 @@ let {
 let selectedCollege = $state("");
 let selectedMajor = $state("");
 let searchQuery = $state("");
-let includePublic = $state(true);
+let includePublic = $state(false);
 let sortBy = $state<"default" | "name">("default");
 // 三种模式：'carousel' (3D 空间轮盘/手风琴) | 'bento' (平铺网格卡片) | 'list' (列表)
 let viewMode = $state<"carousel" | "bento" | "list">("bento");
@@ -387,18 +387,18 @@ function normalizeMajors(major: string | string[] | undefined): string[] {
 }
 
 function isPublicCourse(c: CourseListItem): boolean {
+	if (c.category === "专业总览") return false;
 	const cMajors = normalizeMajors(c.major);
 	return (
-		cMajors.includes("公共课") ||
-		c.category === "学科基础课" ||
-		c.category === "通识教育课"
+		c.category === "公共基础课" ||
+		cMajors.includes("public") ||
+		cMajors.includes("公共课")
 	);
 }
 
 function isCrossPublicCourse(c: CourseListItem, activeMajor: string): boolean {
 	if (!activeMajor || activeMajor === "公共课") return false;
-	const cMajors = normalizeMajors(c.major);
-	return !cMajors.includes(activeMajor) && isPublicCourse(c);
+	return isPublicCourse(c);
 }
 
 const DYNAMIC_PALETTE = [
@@ -424,6 +424,46 @@ function getMajorBadgeClass(majorName: string): string {
 		hash |= 0;
 	}
 	return DYNAMIC_PALETTE[Math.abs(hash) % DYNAMIC_PALETTE.length];
+}
+
+// 获取卡片展示的人性化专业标签列表（过滤内部 ID 与全校通用合并优化）
+function getDisplayMajorBadges(
+	course: CourseListItem,
+): Array<{ label: string; value: string; colorClass: string }> {
+	const cMajors = normalizeMajors(course.major);
+
+	// 全校通用门户或全校公共课 (例如 Henu-Kaguya 或跨多专业)
+	const isUniversityWide =
+		course.id === "Henu-Kaguya" ||
+		(cMajors.includes("public") && cMajors.includes("cs") && cMajors.includes("math"));
+
+	if (isUniversityWide) {
+		return [
+			{
+				label: "全校通用",
+				value: "public",
+				colorClass:
+					"bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30",
+			},
+		];
+	}
+
+	// 提取中文专业名称，排除英文内部 ID (cs, math, se, public, toefl)
+	const internalIds = new Set(["public", "cs", "math", "se", "toefl"]);
+	const nameList = cMajors.filter((m) => !internalIds.has(m.toLowerCase()));
+
+	// 去重
+	const uniqueNames = Array.from(new Set(nameList));
+
+	// 若只有内部 ID 没有解析出中文名，则兜底回退并去掉 public
+	const finalNames =
+		uniqueNames.length > 0 ? uniqueNames : cMajors.filter((m) => m !== "public");
+
+	return finalNames.map((name) => ({
+		label: name,
+		value: name,
+		colorClass: getMajorBadgeClass(name),
+	}));
 }
 
 // 学院级 3D 轮盘卡片
@@ -571,38 +611,49 @@ const filteredCourses = $derived.by(() => {
 		const cMajors = normalizeMajors(c.major);
 
 		if (selectedMajor) {
-			const targetNode = getHierarchyNode(selectedMajor);
-			const targetName = targetNode?.name || selectedMajor;
-			const directMatch =
-				cMajors.includes(selectedMajor) ||
-				cMajors.includes(targetName) ||
-				cMajors.some((m) => m.toLowerCase() === selectedMajor.toLowerCase());
+			if (selectedMajor === "toefl" || selectedCollege === "toefl") {
+				if (!cMajors.includes("toefl") && c.id !== "TOEFL") {
+					return false;
+				}
+			} else {
+				const targetNode = getHierarchyNode(selectedMajor);
+				const targetName = targetNode?.name || selectedMajor;
+				const isDirectMatch =
+					cMajors.includes(selectedMajor) ||
+					cMajors.includes(targetName) ||
+					cMajors.some((m) => m.toLowerCase() === selectedMajor.toLowerCase());
 
-			if (!directMatch) {
-				// 软件工程 (se) 和 TOEFL 按要求严格仅展示绑定课程，不混入其他公共课
-				if (
-					!includePublic ||
-					!isPublicCourse(c) ||
-					selectedMajor === "toefl" ||
-					selectedMajor === "se" ||
-					selectedCollege === "se-college"
-				) {
+				const isPublic = isPublicCourse(c);
+				// 全校公共基础课（标记有 public 或 公共课）
+				const isGeneralPublic =
+					isPublic && (cMajors.includes("public") || cMajors.includes("公共课"));
+
+				// 严防跨专业渗透：若既不是本专业直接修读的课程，也不是面向全校的公共课，直接排除
+				if (!isDirectMatch && !isGeneralPublic) {
+					return false;
+				}
+
+				// 公共基础课受 includePublic 开关控制：
+				// 若当前为公共基础课，且未勾选“包含公共基础课”，则排除
+				if (isPublic && !includePublic) {
 					return false;
 				}
 			}
 		} else if (selectedCollege) {
-			const colMajors = getMajorsByCollege(selectedCollege).flatMap((m) => [
-				m.id,
-				m.name,
-			]);
-			if (colMajors.length > 0) {
-				const inCollege = cMajors.some((m) => colMajors.includes(m));
-				if (!inCollege) {
-					return false;
-				}
-			} else if (selectedCollege === "toefl") {
+			if (selectedCollege === "toefl") {
 				if (!cMajors.includes("toefl") && c.id !== "TOEFL") {
 					return false;
+				}
+			} else {
+				const colMajors = getMajorsByCollege(selectedCollege).flatMap((m) => [
+					m.id,
+					m.name,
+				]);
+				if (colMajors.length > 0) {
+					const inCollege = cMajors.some((m) => colMajors.includes(m));
+					if (!inCollege && !(isPublicCourse(c) && includePublic)) {
+						return false;
+					}
 				}
 			}
 		}
@@ -638,6 +689,17 @@ const filteredCourses = $derived.by(() => {
 		}
 		return a.order - b.order;
 	});
+});
+
+// 3D 轮盘响应式学期大组：与 filteredCourses 深度联动，保证公共课开关及搜索结果在 3D 轮盘中 100% 同步
+const dynamicCarouselSemesters = $derived.by<SemesterGroup[]>(() => {
+	const visibleIds = new Set(filteredCourses.map((c) => c.id));
+	return currentSemesters
+		.map((sem) => ({
+			...sem,
+			subjectIds: sem.subjectIds.filter((id) => visibleIds.has(id)),
+		}))
+		.filter((sem) => sem.subjectIds.length > 0);
 });
 
 function resetFilters() {
@@ -706,7 +768,7 @@ onMount(() => {
 						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 						</svg>
-						<span>返回{currentLevel === "course" && selectedCollege !== "toefl" ? "专业列表" : "学院大厅"}</span>
+						<span>返回{currentLevel === "course" && selectedCollege !== "toefl" ? "专业列表" : (selectedCollege === "toefl" ? "专区大厅" : "学院大厅")}</span>
 					</button>
 				</div>
 			{/if}
@@ -871,32 +933,13 @@ onMount(() => {
 					<div>
 						共找到 <span class="font-bold text-(--primary)">{filteredCourses.length}</span> 门核心课程
 					</div>
-					{#if selectedMajor && selectedMajor !== "公共课" && selectedMajor !== "toefl" && selectedMajor !== "se"}
-						<button
-							type="button"
-							onclick={() => (includePublic = !includePublic)}
-							class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer border select-none {includePublic
-								? 'bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 font-medium'
-								: 'bg-black/5 dark:bg-white/5 text-black/45 dark:text-white/45 border-transparent hover:text-black/80 dark:hover:text-white/80'}"
-							title="切换是否在当前专业下包含全校公共课与大类基础课"
-						>
-							<svg class="w-3.5 h-3.5 {includePublic ? 'text-indigo-600 dark:text-indigo-400' : 'text-current'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								{#if includePublic}
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-								{:else}
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
-								{/if}
-							</svg>
-							<span>包含公共基础课</span>
-						</button>
-					{/if}
 				{/if}
 			</div>
 
 			{#if searchQuery || selectedCollege || selectedMajor}
 				<div class="flex items-center gap-2 flex-wrap">
 					{#if selectedCollege}
-						<span class="text-black/40 dark:text-white/40">学院：</span>
+						<span class="text-black/40 dark:text-white/40">{selectedCollege === "toefl" ? "认证/专区：" : "学院："}</span>
 						<span class="px-2 py-0.5 rounded-md bg-(--primary)/10 text-(--primary) font-medium">
 							"{currentCollegeNode?.name || selectedCollege}"
 						</span>
@@ -1308,7 +1351,7 @@ onMount(() => {
 				</div>
 
 				<Carousel3D
-					semesters={currentSemesters}
+					semesters={dynamicCarouselSemesters}
 					{tree}
 					{accordionMode}
 					onSelectSubject={handleSelectSubject}
@@ -1347,27 +1390,24 @@ onMount(() => {
 								<span class="px-2 py-0.5 rounded-md font-medium border {getSemesterColor(course.semester)} shrink-0">
 									{course.semester}
 								</span>
-								{#if isCrossPublicCourse(course, selectedMajor)}
-									<span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 shrink-0">
-										公共基础
-									</span>
-								{/if}
-								{#each normalizeMajors(course.major) as m}
+								{#each getDisplayMajorBadges(course) as badge}
 									<button
 										type="button"
 										onclick={(e) => {
 											e.stopPropagation();
-											selectMajor(m);
+											selectMajor(badge.value);
 										}}
-										class="px-2 py-0.5 rounded-md font-medium shrink-0 cursor-pointer transition-transform hover:scale-105 {getMajorBadgeClass(m)}"
-										title={`筛选 ${m}`}
+										class="px-2 py-0.5 rounded-md font-medium shrink-0 cursor-pointer transition-transform hover:scale-105 {badge.colorClass}"
+										title={`筛选 ${badge.label}`}
 									>
-										{m}
+										{badge.label}
 									</button>
 								{/each}
-								<span class="px-2 py-0.5 rounded-md bg-black/4 dark:bg-white/5 text-black/60 dark:text-white/60 shrink-0">
-									{course.category}
-								</span>
+								{#if course.category && course.category !== course.semester}
+									<span class="px-2 py-0.5 rounded-md bg-black/4 dark:bg-white/5 text-black/60 dark:text-white/60 shrink-0">
+										{course.category}
+									</span>
+								{/if}
 							</div>
 
 							<!-- 课程大标题与英文副标 -->
@@ -1397,7 +1437,7 @@ onMount(() => {
 						<div class="mt-4 pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2 min-h-[34px] relative z-10">
 							{#if course.tags.length > 0}
 								<div class="flex items-center gap-1.5 flex-nowrap overflow-hidden min-w-0 mr-auto">
-									{#each course.tags.slice(0, 2) as tag}
+									{#each Array.from(new Set(course.tags)).slice(0, 2) as tag}
 										<button
 											onclick={(e) => {
 												e.stopPropagation();
@@ -1445,27 +1485,24 @@ onMount(() => {
 									<span class="text-xs px-1.5 py-0.2 rounded border {getSemesterColor(course.semester)} shrink-0">
 										{course.semester}
 									</span>
-									{#if isCrossPublicCourse(course, selectedMajor)}
-										<span class="text-xs px-1.5 py-0.2 rounded font-semibold bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 shrink-0">
-											公共基础
-										</span>
-									{/if}
-									{#each normalizeMajors(course.major) as m}
+									{#each getDisplayMajorBadges(course) as badge}
 										<button
 											type="button"
 											onclick={(e) => {
 												e.stopPropagation();
-												selectMajor(m);
+												selectMajor(badge.value);
 											}}
-											class="text-xs px-1.5 py-0.2 rounded font-medium shrink-0 cursor-pointer {getMajorBadgeClass(m)}"
-											title={`筛选 ${m}`}
+											class="text-xs px-1.5 py-0.2 rounded font-medium shrink-0 cursor-pointer {badge.colorClass}"
+											title={`筛选 ${badge.label}`}
 										>
-											{m}
+											{badge.label}
 										</button>
 									{/each}
-									<span class="text-xs px-1.5 py-0.2 rounded bg-black/4 dark:bg-white/5 text-black/60 dark:text-white/60 shrink-0">
-										{course.category}
-									</span>
+									{#if course.category && course.category !== course.semester}
+										<span class="text-xs px-1.5 py-0.2 rounded bg-black/4 dark:bg-white/5 text-black/60 dark:text-white/60 shrink-0">
+											{course.category}
+										</span>
+									{/if}
 								</div>
 								{#if course.description}
 									<div class="text-xs text-black/50 dark:text-white/50 truncate mt-1">
