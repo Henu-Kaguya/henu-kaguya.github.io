@@ -34,6 +34,17 @@ export const hierarchyNodes: HierarchyNode[] = [
 		order: 2,
 	},
 	{
+		id: "math-college",
+		name: "数学与统计学院",
+		shortName: "",
+		level: "college",
+		description: "基础数学理论、代数几何、函数论、微分方程与科学计算研究",
+		color: "#f59e0b",
+		icon: "material-symbols:calculate-outline",
+		badge: "",
+		order: 3,
+	},
+	{
 		id: "toefl",
 		name: "TOEFL",
 		shortName: "",
@@ -43,7 +54,7 @@ export const hierarchyNodes: HierarchyNode[] = [
 		icon: "material-symbols:language",
 		image: "https://assets.hodaru.com/henu-kaguya/anime_school_dining_hall_night.jpg",
 		badge: "",
-		order: 3,
+		order: 4,
 	},
 
 	// ==================== 专业 / 方向 (Major Level) ====================
@@ -68,6 +79,17 @@ export const hierarchyNodes: HierarchyNode[] = [
 		color: "#10b981",
 		icon: "material-symbols:developer-mode-tv",
 		order: 2,
+	},
+	{
+		id: "math",
+		name: "数学与应用数学",
+		shortName: "",
+		level: "major",
+		parentId: "math-college",
+		description: "基础数学理论、代数几何、函数论、微分方程与科学计算",
+		color: "#f59e0b",
+		icon: "material-symbols:functions",
+		order: 3,
 	},
 ];
 

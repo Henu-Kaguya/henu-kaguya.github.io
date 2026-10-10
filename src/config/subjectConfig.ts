@@ -123,7 +123,7 @@ export const semesterGroups: SemesterGroup[] = [
 		enName: "Overview",
 		subTitle: "培养方案与学习指南",
 		themeColor: "#6366f1",
-		subjectIds: ["Henu-Kaguya"],
+		subjectIds: ["HENU-ComputerScience"],
 	},
 	{
 		id: "y1s1",
@@ -222,15 +222,30 @@ export const semesterGroups: SemesterGroup[] = [
 const CF_ASSET_BASE = "https://assets.hodaru.com/henu-kaguya";
 
 export const subjectMetas: Record<string, SubjectMeta> = {
-	// --- 专业总览 (Overview) ---
+	// --- 全校总览与门户 (University Portal) ---
 	"Henu-Kaguya": {
 		id: "Henu-Kaguya",
-		name: "专业总览",
+		name: "全校总览与门户",
 		category: "专业总览",
+		majors: ["public", "cs", "math", "se"],
 		gradient: "linear-gradient(135deg, #4f46e5, #6366f1, #818cf8)",
 		image: `${CF_ASSET_BASE}/tenten_anisphia_euphyllia_flower_field.jpg`,
-		description: "河南大学计算机科学与技术专业课程资料及学习指南合集 (HENU-CS)",
+		description: "河南大学全校各专业课程资料、培养方案及开源学习指南门户",
 		remoteRepo: "https://github.com/Henu-Kaguya/Henu-Kaguya.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+
+	// --- 计算机科学与技术专业总览 (Overview) ---
+	"HENU-ComputerScience": {
+		id: "HENU-ComputerScience",
+		name: "计算机专业总览",
+		category: "专业总览",
+		majors: ["cs"],
+		gradient: "linear-gradient(135deg, #0284c7, #38bdf8, #0ea5e9)",
+		image: `${CF_ASSET_BASE}/tenten_anisphia_euphyllia_flower_field.jpg`,
+		description: "河南大学计算机科学与技术专业课程资料及学习指南合集 (HENU-CS)",
+		remoteRepo: "https://github.com/Henu-Kaguya/HENU-ComputerScience.git",
 		remoteBranch: "main",
 		remoteExclude: ["LICENSE"],
 	},
@@ -573,6 +588,215 @@ export const subjectMetas: Record<string, SubjectMeta> = {
 		remoteBranch: "main",
 		remoteExclude: ["LICENSE"],
 	},
+
+	// ==================== 数学与统计学院（数学与应用数学） ====================
+	// --- 专业总览 ---
+	"HENU-Math": {
+		id: "HENU-Math",
+		name: "数学专业总览",
+		category: "专业总览",
+		majors: ["math"],
+		semester: "专业总览",
+		gradient: "linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)",
+		image: getCourseCover("HENU-Math"),
+		description: "河南大学数学与统计学院数学与应用数学专业培养方案、学习路线与课程体系总览",
+		remoteRepo: "https://github.com/Henu-Kaguya/HENU-Math.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+
+	// --- 第一学年（大一上 / 大一下） ---
+	"Mathematical-Analysis": {
+		id: "Mathematical-Analysis",
+		name: "数学分析",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大一上 · 大一下",
+		gradient: "linear-gradient(135deg, #ea580c, #f97316, #fb923c)",
+		image: getCourseCover("Mathematical-Analysis"),
+		description: "数列与函数极限、一元微积分、级数理论、多元微积分与含参变量积分",
+		remoteRepo: "https://github.com/Henu-Kaguya/Mathematical-Analysis.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+
+	// --- 大二上 ---
+	"Abstract-Algebra": {
+		id: "Abstract-Algebra",
+		name: "抽象代数",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)",
+		image: getCourseCover("Abstract-Algebra"),
+		description: "群论、环论、域论与模论基础理论及其结构性质",
+		remoteRepo: "https://github.com/Henu-Kaguya/Abstract-Algebra.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Ordinary-Differential-Equations": {
+		id: "Ordinary-Differential-Equations",
+		name: "常微分方程",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #0284c7, #38bdf8, #7dd3fc)",
+		image: getCourseCover("Ordinary-Differential-Equations"),
+		description: "一阶与高阶微分方程初等积分法、线性微分方程组及定性理论基础",
+		remoteRepo: "https://github.com/Henu-Kaguya/Ordinary-Differential-Equations.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Probability-Theory": {
+		id: "Probability-Theory",
+		name: "概率论",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #059669, #10b981, #34d399)",
+		image: getCourseCover("Probability-Theory"),
+		description: "随机事件及其概率、随机变量分布律、数字特征、极限定理与大数定律",
+		remoteRepo: "https://github.com/Henu-Kaguya/Probability-Theory.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"General-Physics-I": {
+		id: "General-Physics-I",
+		name: "普通物理一",
+		category: "学科基础课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa)",
+		image: getCourseCover("General-Physics-I"),
+		description: "经典力学、热学与机械振动波动理论基础与物理实验思想",
+		remoteRepo: "https://github.com/Henu-Kaguya/General-Physics-I.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Data-Structures-Math": {
+		id: "Data-Structures-Math",
+		name: "数据结构",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa)",
+		image: getCourseCover("Data-Structures-Math"),
+		description: "线性表、栈与队列、树与二叉树、图结构及经典查找排序算法实现",
+		remoteRepo: "https://github.com/Henu-Kaguya/Data-Structures-Math.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Microeconomics": {
+		id: "Microeconomics",
+		name: "微观经济学",
+		category: "学科基础课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #0d9488, #14b8a6, #2dd4bf)",
+		image: getCourseCover("Microeconomics"),
+		description: "供求均衡、消费者选择、厂商理论、市场结构与一般均衡分析",
+		remoteRepo: "https://github.com/Henu-Kaguya/Microeconomics.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Accounting": {
+		id: "Accounting",
+		name: "会计学",
+		category: "学科基础课",
+		majors: ["math"],
+		semester: "大二上",
+		gradient: "linear-gradient(135deg, #4b5563, #6b7280, #9ca3af)",
+		image: getCourseCover("Accounting"),
+		description: "复式记账法、会计循环、财务报表编制与财务分析基础原理",
+		remoteRepo: "https://github.com/Henu-Kaguya/Accounting.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+
+
+	// --- 大三上 ---
+	"Real-Analysis": {
+		id: "Real-Analysis",
+		name: "实变函数",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大三上",
+		gradient: "linear-gradient(135deg, #6366f1, #818cf8, #a5b4fc)",
+		image: getCourseCover("Real-Analysis"),
+		description: "集合与测度论、勒贝格可测函数、勒贝格积分及其收敛定理",
+		remoteRepo: "https://github.com/Henu-Kaguya/Real-Analysis.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Mathematical-Physics-Equations": {
+		id: "Mathematical-Physics-Equations",
+		name: "数学物理方程",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大三上",
+		gradient: "linear-gradient(135deg, #0369a1, #0284c7, #38bdf8)",
+		image: getCourseCover("Mathematical-Physics-Equations"),
+		description: "波动方程、热传导方程、位势方程的定解问题与分离变量法、格林函数法",
+		remoteRepo:
+			"https://github.com/Henu-Kaguya/Mathematical-Physics-Equations.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Operational-Research-Math": {
+		id: "Operational-Research-Math",
+		name: "运筹学",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大三上",
+		gradient: "linear-gradient(135deg, #047857, #10b981, #6ee7b7)",
+		image: getCourseCover("Operational-Research-Math"),
+		description: "线性规划与对偶、整数规划、非线性规划及图与网络优化模型",
+		remoteRepo:
+			"https://github.com/Henu-Kaguya/Operational-Research-Math.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Combinatorics": {
+		id: "Combinatorics",
+		name: "组合数学",
+		category: "专业选修课",
+		majors: ["math"],
+		semester: "大三上",
+		gradient: "linear-gradient(135deg, #8b5cf6, #a78bfa, #c4b5fd)",
+		image: getCourseCover("Combinatorics"),
+		description: "排列组合、母函数、递推关系、容斥原理、鸽巢原理与Pólya计数定理",
+		remoteRepo: "https://github.com/Henu-Kaguya/Combinatorics.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+
+	// --- 大三下 ---
+	"Functional-Analysis": {
+		id: "Functional-Analysis",
+		name: "泛函分析",
+		category: "专业选修课",
+		majors: ["math"],
+		semester: "大三下",
+		gradient: "linear-gradient(135deg, #c026d3, #d946ef, #e879f9)",
+		image: getCourseCover("Functional-Analysis"),
+		description: "度量空间、Banach空间、Hilbert空间、有界线性算子及其四大基本定理",
+		remoteRepo: "https://github.com/Henu-Kaguya/Functional-Analysis.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
+	"Numerical-Analysis": {
+		id: "Numerical-Analysis",
+		name: "计算方法",
+		category: "专业核心课",
+		majors: ["math"],
+		semester: "大三下",
+		gradient: "linear-gradient(135deg, #f59e0b, #fbbf24, #fcd34d)",
+		image: getCourseCover("Numerical-Analysis"),
+		description: "数值逼近、数值微积分、非线性方程求根与线性方程组数值解法",
+		remoteRepo: "https://github.com/Henu-Kaguya/Numerical-Analysis.git",
+		remoteBranch: "main",
+		remoteExclude: ["LICENSE"],
+	},
 };
 
 /**
@@ -598,6 +822,73 @@ export const majorSemesterGroups: Record<string, SemesterGroup[]> = {
 			subTitle: "系统核心与网络架构",
 			themeColor: "#8b5cf6",
 			subjectIds: ["Computer-Network", "Principles-of-Computer-Organization"],
+		},
+	],
+	// 数学与应用数学专业专属轮盘
+	math: [
+		{
+			id: "overview",
+			name: "专业总览",
+			enName: "Overview",
+			subTitle: "培养方案与学习指南",
+			themeColor: "#f59e0b",
+			subjectIds: ["HENU-Math"],
+		},
+		{
+			id: "y1s1",
+			name: "大一上",
+			enName: "Year 1 Fall",
+			subTitle: "数学分析与专业基础",
+			themeColor: "#10b981",
+			subjectIds: ["Mathematical-Analysis"],
+		},
+		{
+			id: "y1s2",
+			name: "大一下",
+			enName: "Year 1 Spring",
+			subTitle: "数学分析与专业深化",
+			themeColor: "#06b6d4",
+			subjectIds: ["Mathematical-Analysis"],
+		},
+		{
+			id: "y2s1",
+			name: "大二上",
+			enName: "Year 2 Fall",
+			subTitle: "代数方程与核心理论",
+			themeColor: "#3b82f6",
+			subjectIds: [
+				"Abstract-Algebra",
+				"Ordinary-Differential-Equations",
+				"Probability-Theory",
+				"General-Physics-I",
+				"Data-Structures-Math",
+				"Microeconomics",
+				"Accounting",
+			],
+		},
+		{
+			id: "y3s1",
+			name: "大三上",
+			enName: "Year 3 Fall",
+			subTitle: "实变方程与运筹优化",
+			themeColor: "#8b5cf6",
+			subjectIds: [
+				"Real-Analysis",
+				"Mathematical-Physics-Equations",
+				"Operational-Research-Math",
+				"Combinatorics",
+			],
+		},
+		{
+			id: "y3s2",
+			name: "大三下",
+			enName: "Year 3 Spring",
+			subTitle: "泛函分析与科学计算",
+			themeColor: "#ec4899",
+			subjectIds: [
+				"Functional-Analysis",
+				"Numerical-Analysis",
+			],
 		},
 	],
 	// TOEFL 专属轮盘
@@ -643,7 +934,11 @@ export const SUBJECT_METAS: Record<string, SubjectMeta> = subjectMetas;
  * 若未配置，则自动依据名称生成优雅的兜底元数据，保证开箱即用。
  */
 export function getSubjectMeta(dirName: string): SubjectMeta {
-	const group = semesterGroups.find((g) => g.subjectIds.includes(dirName));
+	const allGroups = [
+		...semesterGroups,
+		...Object.values(majorSemesterGroups).flat(),
+	];
+	const group = allGroups.find((g) => g.subjectIds.includes(dirName));
 	const semester = group ? group.name.split("·")[0].trim() : undefined;
 
 	if (subjectMetas[dirName]) {

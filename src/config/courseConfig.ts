@@ -57,6 +57,12 @@ export const courseConfig: CourseSiteConfig = {
 				"bg-teal-500/15 text-teal-700 dark:text-teal-300 border-teal-500/30",
 		},
 		{
+			id: "y1_both",
+			name: "大一上 · 大一下",
+			color:
+				"bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
+		},
+		{
 			id: "y2s1",
 			name: "大二上",
 			color: "bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-500/30",
@@ -114,6 +120,13 @@ export const courseConfig: CourseSiteConfig = {
 			description: "大型工程架构、系统工程化开发与测试",
 			color:
 				"bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
+		},
+		{
+			id: "math",
+			name: "数学与应用数学",
+			collegeId: "math-college",
+			description: "基础数学理论、代数几何、函数论、微分方程与科学计算",
+			color: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
 		},
 		{
 			id: "toefl",

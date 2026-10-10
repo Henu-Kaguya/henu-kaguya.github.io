@@ -125,6 +125,9 @@ const currentSemesters = $derived.by<SemesterGroup[]>(() => {
 	if (selectedCollege === "se-college") {
 		return getSemesterGroupsByMajor("se");
 	}
+	if (selectedCollege === "math-college") {
+		return getSemesterGroupsByMajor("math");
+	}
 	return semesterGroups;
 });
 
